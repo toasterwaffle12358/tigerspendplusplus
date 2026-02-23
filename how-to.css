@@ -1,0 +1,110 @@
+/* How to Use page styling */
+html, body {
+	height: 100%;
+	margin: 0;
+}
+
+body {
+	font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+	background: #f9f9f9;
+	color: #333;
+	line-height: 1.6;
+}
+
+.how-to-header {
+	background: linear-gradient(135deg, #e63e2c 0%, #ff7708 50%, #ffbe92 100%);
+	padding: 2rem 1.5rem;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.384), inset 0 0px 20px rgba(255, 255, 255, 0.164);
+	position: relative;
+}
+
+.back-link {
+	display: inline-block;
+	margin-bottom: 1rem;
+	color: #fff;
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 1.1rem;
+	transition: opacity 0.18s ease;
+}
+
+.back-link:hover {
+	opacity: 0.8;
+}
+
+.how-to-header h1 {
+	margin: 0;
+	color: #fff;
+	font-size: 2.5rem;
+	text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.how-to-content {
+	max-width: 800px;
+	margin: 2rem auto;
+	padding: 0 1.5rem 2rem;
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+	padding: 2rem;
+}
+
+section {
+	margin-bottom: 2.5rem;
+}
+
+section h2 {
+	color: #ff6600;
+	font-size: 1.5rem;
+	border-bottom: 2px solid #ff6600;
+	padding-bottom: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+section p {
+	margin: 0.5rem 0;
+	font-size: 1.05rem;
+}
+
+section ul {
+	margin: 1rem 0;
+	padding-left: 2rem;
+}
+
+section li {
+	margin: 0.75rem 0;
+	font-size: 1.05rem;
+}
+
+strong {
+	color: #ff6600;
+	font-weight: 600;
+}
+
+.how-to-footer {
+	text-align: center;
+	padding: 2rem;
+	color: #999;
+	font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+	.how-to-header h1 {
+		font-size: 1.8rem;
+	}
+
+	.how-to-content {
+		padding: 1.5rem;
+	}
+
+	section h2 {
+		font-size: 1.25rem;
+	}
+}
+
+.example-image {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+}
