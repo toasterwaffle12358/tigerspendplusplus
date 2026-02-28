@@ -55,6 +55,7 @@ var balances = [];
 var datesAndBalances = [];
 
 
+
 function parseCSV(text) {
 	const rows = [];
 	let cur = '';
@@ -175,6 +176,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		dates.push(pair[0]);
 		balances.push(pair[1]);
 	}
+	for (var i = 0; i < dates.length; i++) {
+		dates[i] = new Date(dates[i]);
+	}
 
 	console.log('Totals:');
 	console.log('Artesanos:', artesanosTotal);
@@ -272,7 +276,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				datalabels: {
 					display: function(context) {
     					const value = context.dataset.data[context.dataIndex];
-    					return value > 20; // only show if slice > 10
+    					const total = context.dataset.data.reduce((a, b) => a + b, 0);
+    					return value/total > 0.045; // only show if slice > 5%
   					},
 					color: 'black',
 					font: {size: 12},
@@ -323,7 +328,8 @@ document.addEventListener('DOMContentLoaded', () => {
 				datalabels: {
 					display: function(context) {
     					const value = context.dataset.data[context.dataIndex];
-    					return value > 5; // only show if slice > 10
+    					const total = context.dataset.data.reduce((a, b) => a + b, 0);
+    					return value/total > 0.03; // only show if slice > 5%
   					},
 					color: 'black',
 					font: {size: 12},
@@ -363,15 +369,78 @@ document.addEventListener('DOMContentLoaded', () => {
 			legend: {display: false},
 			scales: {
 				y: {
-					title: {
-						display: true,
-						text: "Balance"
-					}
+					beginAtZero: false
+				},
+				x: {
+					type: 'time',
+					min: new Date('2025-08-01'),
+					max: new Date('2026-05-20')
+
 				}
 			},
 			plugins: {
 				datalabels: {
 					display: false
+				},
+				annotation: {
+					annotations: {
+						winterBreak: {
+						type: 'box',
+						xMin: new Date('2025-12-17'),   // start of break
+						xMax: new Date('2026-01-11'),    // end of break
+						backgroundColor: 'rgba(173, 230, 177, 0.3)', // light blue, semi‑transparent
+						borderColor: 'green',
+						borderWidth: 1,
+						},
+						winterBreakLabel: {
+							type: 'label',
+							xValue: new Date('2025-12-29'),   // middle of break
+							yValue: 1000,                        // pick a y value in your data range
+							content: 'Winter Break',
+							color: 'black',
+							font: { size: 10 , weight: 'bold'},
+							rotation: 90
+						},
+
+						springBreak: {
+							type: 'box',
+							xMin: new Date('2026-03-07'),   // start of break
+							xMax: new Date('2026-03-14'),    // end of break
+							backgroundColor: 'rgba(173, 230, 177, 0.3)', // light green, semi‑transparent
+							borderColor: 'green',
+							borderWidth: 1,
+							label: {
+								content: 'Spring Break',
+								enabled: true,
+								position: 'center',            // 'start', 'center', 'end'
+								color: 'black',
+								font: { weight: 'bold' }
+							}
+						},
+						springBreakLabel: {
+							type: 'label',
+							xValue: new Date('2026-03-10'),   // middle of break
+							yValue: 1000,                        // pick a y value in your data range
+							content: 'Spring Break',
+							color: 'black',
+							font: { size: 10 , weight: 'bold'},
+							rotation: 90
+						},
+						endOfYear: {
+							type: 'line',
+							xMin: new Date('2026-05-05'),
+							xMax: new Date('2026-05-05'),
+							borderColor: 'black',
+							borderWidth: 2,
+						},
+						startOfYear: {
+							type: 'line',
+							xMin: new Date('2025-08-18'),
+							xMax: new Date('2025-08-18'),
+							borderColor: 'black',
+							borderWidth: 2,
+						}
+					}
 				}
 			}
 		}
