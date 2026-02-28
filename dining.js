@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		content.appendChild(info);
 	}
-	var locations = ["Artesanos", "Beanz", "Ben & Jerry's", "Bytes", "Corner Store", "Cantina", "Midnight Oil", "Nathan's", "RITZ", "Crossroads", "Commons", "global Market", "Loaded latke", "Ctrl alt deli", "Vending Drinks", "Brick city cafe", "the college grind", "Vending Snacks"];
+	var locations = ["Artesanos", "Beanz", "Ben & Jerry's", "Bytes", "Corner Store", "Cantina", "Midnight Oil", "Nathan's", "RITZ", "Crossroads", "Commons", "Global Market", "Loaded Latke", "Ctrl Alt Deli", "Vending Drinks", "Brick City Cafe", "The College Grind", "Vending Snacks"];
 	const yValues = [artesanosTotal, beanzTotal, BJTotal, bytesTotal, cohoTotal, cantinaTotal, moilTotal, nathansTotal, ritzTotal, croadsTotal, commonsTotal, marketTotal, loadedTotal, ctrlTotal, vendingDrinkTotal, brickTotal, grindTotal, vendingSnackTotal];
 	const yValuesVisits = [artesanosTotalVisited, beanzTotalVisited, BJTotalVisited, bytesTotalVisited, cohoTotalVisited, cantinaTotalVisited, moilTotalVisited, nathansTotalVisited, ritzTotalVisited, croadsTotalVisited, commonsTotalVisited, marketTotalVisited, loadedTotalVisited, ctrlTotalVisited, vendingDrinkTotalVisited, brickTotalVisited, grindTotalVisited, vendingSnackTotalVisited];
 	var barColors = ["#b91d47", "#00aba9", "#2b5797", "#e8c3b9", "#1e7145", "#ff5733", "#33ff57", "#3357ff", "#ff33a6", "#a633ff", "#33fff2", "#f2ff33", "#ff8633", "#8633ff", "#33ff86", "#ff3380", "#3380ff", "#80ff33"];
@@ -445,4 +445,39 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		}
 	});
+
+	//getting last 4 weeks info
+	currentDate = new Date(dates.at(-2));
+	console.log("Current date:", currentDate);
+
+	currentBalance = parseFloat(balances.at(-2));
+	console.log("Current balance:", currentBalance);
+
+	fourweeksAgo = new Date(dates.at(-30));
+	console.log("Four weeks ago:", fourweeksAgo);
+
+	fourweeksAgoBalance = parseFloat(balances.at(-30));
+	if (fourweeksAgoBalance < currentBalance) {
+		fourweeksAgoBalance += 2500;
+	}
+	console.log("Four weeks ago balance:", fourweeksAgoBalance);
+
+	balanceDiff = fourweeksAgoBalance - currentBalance;
+	console.log("Balance difference:", balanceDiff);
+
+	spendPerDay = balanceDiff / 28;
+	console.log("Average spend per day:", spendPerDay);
+
+	document.getElementById("avgSpendValue").innerHTML = `$${spendPerDay.toFixed(2)}`;
+
+	daysleft = (new Date('2026-05-05') - currentDate) / (1000 * 60 * 60 * 24);
+	console.log("Days left:", daysleft);
+	spendPerDayLeft = currentBalance / daysleft;
+	spendPerDayLeft1000 = (currentBalance - 1000) / daysleft;
+	console.log("Average spend per day left (ending with $1000):", spendPerDayLeft1000);
+	document.getElementById("avgSpendLeftValue1000").innerHTML = `$${spendPerDayLeft1000.toFixed(2)}`;
+	console.log("Average spend per day left:", spendPerDayLeft);
+	document.getElementById("avgSpendLeftValue").innerHTML = `$${spendPerDayLeft.toFixed(2)}`;
+
+
 });

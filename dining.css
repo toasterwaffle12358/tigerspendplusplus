@@ -117,3 +117,9 @@ hr.solid{
     align-self: left;
     margin: 0px
 }
+.breakdownValue{
+    font-size: 120%;
+    color: #111;
+    margin: 0px;
+    padding: 0px;
+}
