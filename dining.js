@@ -265,7 +265,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			labels: locations,
 			datasets: [{
 				backgroundColor: barColors,
-				data: yValues
+				data: yValues,
+				borderColor: '#5e5e5e',
+				borderWidth: 1
 			}],
 			hoverOffset: 20,
 			cutout: '50%'
@@ -317,7 +319,9 @@ document.addEventListener('DOMContentLoaded', () => {
 			labels: locations,
 			datasets: [{
 				backgroundColor: barColors,
-				data: yValuesVisits
+				data: yValuesVisits,
+				borderColor: '#5e5e5e',
+				borderWidth: 1
 			}],
 			hoverOffset: 20,
 			cutout: '50%'
@@ -496,6 +500,22 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.getElementById("avgSpendLeftValue1000").innerHTML = `$${spendPerDayLeft1000.toFixed(2)}`;
 	console.log("Average spend per day left:", spendPerDayLeft);
 	document.getElementById("avgSpendLeftValue").innerHTML = `$${spendPerDayLeft.toFixed(2)}`;
+
+	percent = 100 - (daysleft/114 * 100);
+	console.log("Percent of year completed:", percent);
+	document.querySelector(".dateProgress").style.width = percent + "%";
+	document.getElementById("dateProgressID").innerHTML = `${percent.toFixed(1)}%`;
+
+	diningDollarsMax = datesAndBalances.find(item => item[0] === "2026-01-11");
+	if (diningDollarsMax[1] <= 1500) {
+		diningDollarsMax[1] = parseInt(diningDollarsMax[1]) + 2500;
+	}
+	diningDollarsMax = diningDollarsMax[1];
+	console.log("Max dining dollars:", diningDollarsMax);
+	percentUsed = 100 - ((currentBalance / diningDollarsMax) * 100);
+	console.log("Percent of dining dollars used:", percentUsed);
+	document.querySelector(".spendProgress").style.width = percentUsed + "%";
+	document.getElementById("spendProgressID").innerHTML = `${percentUsed.toFixed(1)}%`;
 
 
 });
