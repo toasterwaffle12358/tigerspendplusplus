@@ -242,6 +242,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		content.appendChild(info);
 	}
+
+	//phonevariables
+	pieOffset = 20;
+	displayLegend = true;
+	pieRadius = '75%';
+	if (window.innerWidth < 600) {
+		pieOffset = 0;
+		displayLegend = false;
+		pieRadius = '50%';
+	}
+
+
 	var locations = ["Artesanos", "Beanz", "Ben & Jerry's", "Bytes", "Corner Store", "Cantina", "Midnight Oil", "Nathan's", "RITZ", "Crossroads", "Commons", "Global Market", "Loaded Latke", "Ctrl Alt Deli", "Vending Drinks", "Brick City Cafe", "The College Grind", "Vending Snacks"];
 	const yValues = [artesanosTotal, beanzTotal, BJTotal, bytesTotal, cohoTotal, cantinaTotal, moilTotal, nathansTotal, ritzTotal, croadsTotal, commonsTotal, marketTotal, loadedTotal, ctrlTotal, vendingDrinkTotal, brickTotal, grindTotal, vendingSnackTotal];
 	const yValuesVisits = [artesanosTotalVisited, beanzTotalVisited, BJTotalVisited, bytesTotalVisited, cohoTotalVisited, cantinaTotalVisited, moilTotalVisited, nathansTotalVisited, ritzTotalVisited, croadsTotalVisited, commonsTotalVisited, marketTotalVisited, loadedTotalVisited, ctrlTotalVisited, vendingDrinkTotalVisited, brickTotalVisited, grindTotalVisited, vendingSnackTotalVisited];
@@ -265,9 +277,9 @@ document.addEventListener('DOMContentLoaded', () => {
       			left: 100,
       			right: 100
     		},
-			radius: '75%',
+			radius: pieRadius,
 			plugins: {
-				legend: {display:true},
+				legend: {display:displayLegend},
 				title: {
 				display: true,
 				text: "Dining Expenditure by Location",
@@ -283,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					font: {size: 12},
 					anchor: 'end',     // attach to outer edge of slice
         			align: 'end',      // push outward
-        			offset: 20,
+        			offset: pieOffset,
 					clamp: true,
         			clip: false,
 					formatter: (value, context) => {
@@ -317,9 +329,15 @@ document.addEventListener('DOMContentLoaded', () => {
       			left: 100,
       			right: 100
     		},
-			radius: '75%',
+			radius: pieRadius,
 			plugins: {
-				legend: {display:true},
+				legend: {
+					display: displayLegend,
+					align: 'center',
+					color: 'black',
+
+
+				},
 				title: {
 				display: true,
 				text: "Dining Visits by Location",
@@ -335,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
 					font: {size: 12},
 					anchor: 'end',     // attach to outer edge of slice
         			align: 'end',      // push outward
-        			offset: 20,
+        			offset: pieOffset,
 					clamp: true,
         			clip: false,
 					formatter: (value, context) => {
@@ -480,4 +498,17 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.getElementById("avgSpendLeftValue").innerHTML = `$${spendPerDayLeft.toFixed(2)}`;
 
 
+});
+
+document.addEventListener('resize', () => {
+	//phonevariables
+	if (window.innerWidth < 600) {
+		pieOffset = 0;
+		displayLegend = false;
+		pieRadius = '50%';
+	} else {
+		pieOffset = 20;
+		displayLegend = true;
+		pieRadius = '75%';
+	}
 });
