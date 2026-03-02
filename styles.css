@@ -274,3 +274,11 @@ main{
 	box-shadow:0 6px 16px rgba(0,0,0,0.35);
 }
 
+/* version label in bottom-left corner */
+.version-label{
+	position:fixed;
+	bottom:1rem;
+	left:1rem;
+	pointer-events:none;
+}
+

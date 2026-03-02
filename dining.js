@@ -506,7 +506,39 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.querySelector(".dateProgress").style.width = percent + "%";
 	document.getElementById("dateProgressID").innerHTML = `${percent.toFixed(1)}%`;
 
-	diningDollarsMax = datesAndBalances.find(item => item[0] === "2026-01-11");
+	diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-13");
+	diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-14");
+	diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-15");
+	diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-16");
+	diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-17");
+	diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-18");
+	diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-19");
+	diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-20");
+	diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-21");
+	if (datesAndBalances.some(item => item[0] === "2025-12-17")) {
+		diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-17");
+	} else if (datesAndBalances.some(item => item[0] === "2025-12-16")) {
+		diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-16");
+	} else if (datesAndBalances.some(item => item[0] === "2025-12-15")) {
+		diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-15");
+	} else if (datesAndBalances.some(item => item[0] === "2025-12-14")) {
+		diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-14");
+	} else if (datesAndBalances.some(item => item[0] === "2025-12-13")) {
+		diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-13");
+	} else if (datesAndBalances.some(item => item[0] === "2025-12-12")) {
+		diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-12");
+	} else if (datesAndBalances.some(item => item[0] === "2025-12-11")) {
+		diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-11");
+	} else if (datesAndBalances.some(item => item[0] === "2025-12-10")) {
+		diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-10");
+	} else if (datesAndBalances.some(item => item[0] === "2025-12-09")) {
+		diningDollarsMax = datesAndBalances.find(item => item[0] === "2025-12-09");
+	} else {
+		diningDollarsMax = ["2025-12-17", "0"];
+	}
+
+	
+
 	if (diningDollarsMax[1] <= 1500) {
 		diningDollarsMax[1] = parseInt(diningDollarsMax[1]) + 2500;
 	}
