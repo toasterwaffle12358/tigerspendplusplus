@@ -107,10 +107,15 @@ main{padding:1rem 1.25rem}
     .back-btn {
         position: static;
         transform: none;
-        margin-bottom: 1rem;
     }
     .back-btn:hover {
         transform: none;
+    }
+    .dining-header h2{
+	margin:0;
+	font-size:260%;
+	font-weight:700;
+	color:#111;
     }
 }
 
