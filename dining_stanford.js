@@ -1,52 +1,5 @@
-// dining.js — parse CSV and expose rows for other scripts
-/* exported parseCSV */
-
 // simple CSV parser that handles quoted fields and double-quote escaping
 src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0";
-
-// dining.js — parse CSV and expose rows for other scripts
-/* exported parseCSV */
-
-// simple CSV parser that handles quoted fields and double-quote escaping
-
-// Totals converted from Java -> JS `var` declarations
-var artesanosTotal = 0;
-var beanzTotal = 0;
-var BJTotal = 0;
-var bytesTotal = 0;
-var cohoTotal = 0;
-var cantinaTotal = 0;
-var moilTotal = 0;
-var nathansTotal = 0;
-var ritzTotal = 0;
-var croadsTotal = 0;
-var commonsTotal = 0;
-var marketTotal = 0;
-var loadedTotal = 0;
-var ctrlTotal = 0;
-var vendingDrinkTotal = 0;
-var brickTotal = 0;
-var grindTotal = 0;
-var vendingSnackTotal = 0
-
-var artesanosTotalVisited = 0;
-var beanzTotalVisited = 0;
-var BJTotalVisited = 0;
-var bytesTotalVisited = 0;
-var cohoTotalVisited = 0;
-var cantinaTotalVisited = 0;
-var moilTotalVisited = 0;
-var nathansTotalVisited = 0;
-var ritzTotalVisited = 0;
-var croadsTotalVisited = 0;
-var commonsTotalVisited = 0;
-var marketTotalVisited = 0;
-var loadedTotalVisited = 0;
-var ctrlTotalVisited = 0;
-var vendingDrinkTotalVisited = 0;
-var brickTotalVisited = 0;
-var grindTotalVisited = 0;
-var vendingSnackTotalVisited = 0;
 
 
 var brannerTotal = 0;
@@ -57,8 +10,6 @@ var wilburTotal = 0;
 var rickerTotal = 0;
 var gerhardTotal = 0;
 var lakesideTotal = 0;
-
-
 
 
 
@@ -216,12 +167,12 @@ document.addEventListener('DOMContentLoaded', () => {
 				datalabels: {
 					display: function(context) {
     					const value = context.dataset.data[context.dataIndex];
-    					return value > 20; // only show if slice > 10
+    					return value > 20; // only show if slice > 20
   					},
 					color: 'black',
 					font: {size: 12},
-					anchor: 'end',     // attach to outer edge of slice
-        			align: 'end',      // push outward
+					anchor: 'end',
+        			align: 'end',
         			offset: 20,
 					clamp: true,
         			clip: false,
@@ -232,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
 						const total = data.reduce((a, b) => a + b, 0);
 						const percentage = ((value / total) * 100).toFixed(1) + "%";
 
-						return [label, percentage]; // <-- two lines
+						return [label, percentage];
         			}
 				}
 			}

@@ -1,4 +1,3 @@
-/* Simple white page styling for dining statistics */
 html,body{height:100%;}
 body{
 	margin:0;
@@ -21,7 +20,6 @@ body{
 	font-weight:700;
 	color:#111;
 }
-/* Back button styling */
 .back-btn{
 	position:absolute;
 	left:1.25rem;

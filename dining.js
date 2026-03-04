@@ -1,15 +1,7 @@
-// dining.js — parse CSV and expose rows for other scripts
-/* exported parseCSV */
 
 // simple CSV parser that handles quoted fields and double-quote escaping
 src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0";
 
-// dining.js — parse CSV and expose rows for other scripts
-/* exported parseCSV */
-
-// simple CSV parser that handles quoted fields and double-quote escaping
-
-// Totals converted from Java -> JS `var` declarations
 var artesanosTotal = 0;
 var beanzTotal = 0;
 var BJTotal = 0;
@@ -99,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	const rows = parseCSV(csv);
-	// expose parsed rows for easy iteration by other scripts
 	// `rows` is a list of lists: outer list = lines, inner lists = items per line
 
 	for (const line of rows) {
@@ -244,6 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	//phonevariables
+	//not working cuz charts arent edited once created, so these vars dont affect the charts after initial load, like I cant do window resizing dynamically
 	pieOffset = 20;
 	displayLegend = true;
 	pieRadius = '75%';
@@ -291,12 +283,12 @@ document.addEventListener('DOMContentLoaded', () => {
 					display: function(context) {
     					const value = context.dataset.data[context.dataIndex];
     					const total = context.dataset.data.reduce((a, b) => a + b, 0);
-    					return value/total > 0.045; // only show if slice > 5%
+    					return value/total > 0.045; // only show if slice > 4.5%
   					},
 					color: 'black',
 					font: {size: 12},
-					anchor: 'end',     // attach to outer edge of slice
-        			align: 'end',      // push outward
+					anchor: 'end',
+        			align: 'end',
         			offset: pieOffset,
 					clamp: true,
         			clip: false,
@@ -307,7 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
 						const total = data.reduce((a, b) => a + b, 0);
 						const percentage = ((value / total) * 100).toFixed(1) + "%";
 
-						return [label, percentage]; // <-- two lines
+						return [label, percentage];
         			}
 				}
 			}
@@ -351,12 +343,12 @@ document.addEventListener('DOMContentLoaded', () => {
 					display: function(context) {
     					const value = context.dataset.data[context.dataIndex];
     					const total = context.dataset.data.reduce((a, b) => a + b, 0);
-    					return value/total > 0.03; // only show if slice > 5%
+    					return value/total > 0.03; // only show if slice > 3%
   					},
 					color: 'black',
 					font: {size: 12},
-					anchor: 'end',     // attach to outer edge of slice
-        			align: 'end',      // push outward
+					anchor: 'end',
+        			align: 'end',
         			offset: pieOffset,
 					clamp: true,
         			clip: false,
@@ -367,7 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
 						const total = data.reduce((a, b) => a + b, 0);
 						const percentage = ((value / total) * 100).toFixed(1) + "%";
 
-						return [label, percentage]; // <-- two lines
+						return [label, percentage];
         			}
 				}
 			}
@@ -410,14 +402,14 @@ document.addEventListener('DOMContentLoaded', () => {
 						type: 'box',
 						xMin: new Date('2025-12-17'),   // start of break
 						xMax: new Date('2026-01-11'),    // end of break
-						backgroundColor: 'rgba(173, 230, 177, 0.3)', // light blue, semi‑transparent
+						backgroundColor: 'rgba(173, 230, 177, 0.3)',
 						borderColor: 'green',
 						borderWidth: 1,
 						},
 						winterBreakLabel: {
 							type: 'label',
 							xValue: new Date('2025-12-29'),   // middle of break
-							yValue: 1000,                        // pick a y value in your data range
+							yValue: 1000,
 							content: 'Winter Break',
 							color: 'black',
 							font: { size: 10 , weight: 'bold'},
@@ -428,13 +420,13 @@ document.addEventListener('DOMContentLoaded', () => {
 							type: 'box',
 							xMin: new Date('2026-03-07'),   // start of break
 							xMax: new Date('2026-03-14'),    // end of break
-							backgroundColor: 'rgba(173, 230, 177, 0.3)', // light green, semi‑transparent
+							backgroundColor: 'rgba(173, 230, 177, 0.3)',
 							borderColor: 'green',
 							borderWidth: 1,
 							label: {
 								content: 'Spring Break',
 								enabled: true,
-								position: 'center',            // 'start', 'center', 'end'
+								position: 'center',
 								color: 'black',
 								font: { weight: 'bold' }
 							}
@@ -442,7 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
 						springBreakLabel: {
 							type: 'label',
 							xValue: new Date('2026-03-10'),   // middle of break
-							yValue: 1000,                        // pick a y value in your data range
+							yValue: 1000,
 							content: 'Spring Break',
 							color: 'black',
 							font: { size: 10 , weight: 'bold'},

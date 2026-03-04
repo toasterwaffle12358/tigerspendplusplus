@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const viewStatsContainer = document.getElementById('viewStatsContainer');
 	const uploadAnotherBtn = document.getElementById('uploadAnotherBtn');
 	const viewStatsBtn = document.getElementById('viewStatsBtn');
+	const singleFileWarning = document.getElementById('singleFileWarning');
 
 	// maintain a list of files to upload
 	let fileQueue = [];
@@ -18,11 +19,19 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (fileQueue.length === 0) {
 			fileListContainer.style.display = 'none';
 			viewStatsContainer.style.display = 'none';
+			singleFileWarning.style.display = 'none';
 			return;
 		}
 
 		fileListContainer.style.display = 'block';
 		viewStatsContainer.style.display = 'block';
+		
+		// show warning if only one file uploaded
+		if (fileQueue.length === 1) {
+			singleFileWarning.style.display = 'block';
+		} else {
+			singleFileWarning.style.display = 'none';
+		}
 
 		fileQueue.forEach((file, index) => {
 			const item = document.createElement('div');

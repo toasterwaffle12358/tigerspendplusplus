@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				console.warn('Could not save CSV to sessionStorage:', err);
 			}
 
-			// also remember how many files were combined so the stats page can report it
+			// remember how many files were combined so the stats page can report it
 			try {
 				sessionStorage.setItem('uploadedCSVFileCount', String(fileQueue.length));
 			} catch (err) {
