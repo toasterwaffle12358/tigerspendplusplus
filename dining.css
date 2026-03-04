@@ -184,3 +184,9 @@ hr.solid{
     width: 100%;
     padding-left: 10px;
 }
+.comingsoon{
+    font-size: 150%;
+    font-weight: 600;
+    color: #111;
+    text-align: center;
+}
