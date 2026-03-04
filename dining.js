@@ -493,7 +493,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	document.getElementById("avgSpendValue").innerHTML = `$${spendPerDay.toFixed(2)}`;
 
-	daysleft = (new Date('2026-05-05') - currentDate) / (1000 * 60 * 60 * 24);
+	const semesterEndDate = new Date(document.getElementById("semesterEndDate").value);
+	daysleft = (semesterEndDate - currentDate) / (1000 * 60 * 60 * 24);
 	console.log("Days left:", daysleft);
 	spendPerDayLeft = currentBalance / daysleft;
 	spendPerDayLeft1000 = (currentBalance - 1000) / daysleft;
@@ -550,6 +551,23 @@ document.addEventListener('DOMContentLoaded', () => {
 	document.querySelector(".spendProgress").style.width = percentUsed + "%";
 	document.getElementById("spendProgressID").innerHTML = `${percentUsed.toFixed(1)}%`;
 
+
+	// Add event listener for semester end date changes
+	document.getElementById("semesterEndDate").addEventListener('change', () => {
+		const semesterEndDate = new Date(document.getElementById("semesterEndDate").value);
+		var daysinterm = (semesterEndDate - new Date('2026-01-11')) / (1000 * 60 * 60 * 24);
+		console.log("Days in term:", daysinterm);
+		daysleft = (semesterEndDate - currentDate) / (1000 * 60 * 60 * 24);
+		spendPerDayLeft = currentBalance / daysleft;
+		spendPerDayLeft1000 = (currentBalance - 1000) / daysleft;
+
+		document.getElementById("avgSpendLeftValue1000").innerHTML = `$${spendPerDayLeft1000.toFixed(2)}`;
+		document.getElementById("avgSpendLeftValue").innerHTML = `$${spendPerDayLeft.toFixed(2)}`;
+
+		percent = 100 - (daysleft/daysinterm * 100);
+		document.querySelector(".dateProgress").style.width = percent + "%";
+		document.getElementById("dateProgressID").innerHTML = `${percent.toFixed(1)}%`;
+	});
 
 });
 
