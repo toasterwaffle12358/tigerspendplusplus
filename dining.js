@@ -20,6 +20,7 @@ var vendingDrinkTotal = 0;
 var brickTotal = 0;
 var grindTotal = 0;
 var vendingSnackTotal = 0
+var petalsTotal = 0;
 
 var artesanosTotalVisited = 0;
 var beanzTotalVisited = 0;
@@ -39,6 +40,7 @@ var vendingDrinkTotalVisited = 0;
 var brickTotalVisited = 0;
 var grindTotalVisited = 0;
 var vendingSnackTotalVisited = 0;
+var petalsTotalVisited = 0;
 
 const chart = document.getElementById('myChart');
 
@@ -151,7 +153,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		} else if (line[1].includes('SNACK')) {
 			vendingSnackTotal -= parseFloat(line[2]) || 0;
 			vendingSnackTotalVisited++;
+		} else if (line[1].includes('Petals')) {
+			petalsTotal -= parseFloat(line[2]) || 0;
+			petalsTotalVisited++;
 		}
+	
+
 		if (datesAndBalances.length > 0){
 			if (line[0].slice(0, 10) != datesAndBalances.at(-1)[0].slice(0, 10)) {
 				datesAndBalances.push([line[0].slice(0, 10), line[3]]);
@@ -190,6 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	console.log('Brick city cafe:', brickTotal);
 	console.log('the college grind:', grindTotal);
 	console.log('Vending Snacks:', vendingSnackTotal);
+	console.log('Petals:', petalsTotal);
 	
 	console.log('Visits:');
 	console.log('Artesanos:', artesanosTotalVisited);
@@ -210,6 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	console.log('Brick city cafe:', brickTotalVisited);
 	console.log('the college grind:', grindTotalVisited);
 	console.log('Vending Snacks:', vendingSnackTotalVisited);
+	console.log('Petals:', petalsTotalVisited);
 	console.log('Dates:', dates);
 	console.log('Balances:', balances);
 	console.log('Dates and Balances:', datesAndBalances);
@@ -246,10 +255,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 
-	var locations = ["Artesanos", "Beanz", "Ben & Jerry's", "Bytes", "Corner Store", "Cantina", "Midnight Oil", "Nathan's", "RITZ", "Crossroads", "Commons", "Global Market", "Loaded Latke", "Ctrl Alt Deli", "Vending Drinks", "Brick City Cafe", "The College Grind", "Vending Snacks"];
-	const yValues = [artesanosTotal, beanzTotal, BJTotal, bytesTotal, cohoTotal, cantinaTotal, moilTotal, nathansTotal, ritzTotal, croadsTotal, commonsTotal, marketTotal, loadedTotal, ctrlTotal, vendingDrinkTotal, brickTotal, grindTotal, vendingSnackTotal];
-	const yValuesVisits = [artesanosTotalVisited, beanzTotalVisited, BJTotalVisited, bytesTotalVisited, cohoTotalVisited, cantinaTotalVisited, moilTotalVisited, nathansTotalVisited, ritzTotalVisited, croadsTotalVisited, commonsTotalVisited, marketTotalVisited, loadedTotalVisited, ctrlTotalVisited, vendingDrinkTotalVisited, brickTotalVisited, grindTotalVisited, vendingSnackTotalVisited];
-	var barColors = ["#b91d47", "#00aba9", "#2b5797", "#e8c3b9", "#1e7145", "#ff5733", "#33ff57", "#3357ff", "#ff33a6", "#a633ff", "#33fff2", "#f2ff33", "#ff8633", "#8633ff", "#33ff86", "#ff3380", "#3380ff", "#80ff33"];
+	var locations = ["Artesanos", "Beanz", "Ben & Jerry's", "Bytes", "Corner Store", "Cantina", "Midnight Oil", "Nathan's", "RITZ", "Crossroads", "Commons", "Global Market", "Loaded Latke", "Ctrl Alt Deli", "Vending Drinks", "Brick City Cafe", "The College Grind", "Vending Snacks", "Petals"];
+	const yValues = [artesanosTotal, beanzTotal, BJTotal, bytesTotal, cohoTotal, cantinaTotal, moilTotal, nathansTotal, ritzTotal, croadsTotal, commonsTotal, marketTotal, loadedTotal, ctrlTotal, vendingDrinkTotal, brickTotal, grindTotal, vendingSnackTotal, petalsTotal];
+	const yValuesVisits = [artesanosTotalVisited, beanzTotalVisited, BJTotalVisited, bytesTotalVisited, cohoTotalVisited, cantinaTotalVisited, moilTotalVisited, nathansTotalVisited, ritzTotalVisited, croadsTotalVisited, commonsTotalVisited, marketTotalVisited, loadedTotalVisited, ctrlTotalVisited, vendingDrinkTotalVisited, brickTotalVisited, grindTotalVisited, vendingSnackTotalVisited, petalsTotalVisited];
+	var barColors = ["#b91d47", "#00aba9", "#2b5797", "#e8c3b9", "#1e7145", "#ff5733", "#33ff57", "#3357ff", "#ff33a6", "#a633ff", "#33fff2", "#f2ff33", "#ff8633", "#8633ff", "#33ff86", "#ff3380", "#3380ff", "#80ff33", "#ff9ce6"];
 	Chart.register(ChartDataLabels);
 	new Chart(chart, {
 		type: "pie",
