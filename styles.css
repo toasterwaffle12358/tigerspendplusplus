@@ -223,28 +223,52 @@ main{
 
 .how-to-btn{
 	position:fixed;
-	top:4.5rem;
+	bottom:9.5rem;
 	right:1.5rem;
-	display:flex;
+	display:inline-flex;
 	justify-content:center;
 	align-items:center;
-	width:3rem;
-	height:3rem;
-	background:var(--accent);
-	color:#fff;
-	border-radius:50%;
-	font-size:1.5rem;
+	padding:0.75rem 1.25rem;
+	background:#ffffff;
+	color:#000000;
+	border-radius:50px;
+	font-size:1rem;
 	font-weight:700;
 	text-decoration:none;
-	box-shadow:0 4px 12px rgba(255,102,0,0.3);
+	box-shadow:0 4px 12px rgba(0,0,0,0.2);
 	transition:all 0.18s ease;
 	z-index:1000;
 }
 
 .how-to-btn:hover{
-	background:var(--accent-dark);
+	background:#f0f0f0;
 	transform:scale(1.1);
-	box-shadow:0 6px 16px rgba(255,102,0,0.4);
+	box-shadow:0 6px 16px rgba(0,0,0,0.3);
+}
+
+.feedback-btn{
+	position:fixed;
+	bottom:6rem;
+	right:1.5rem;
+	display:inline-flex;
+	justify-content:center;
+	align-items:center;
+	padding:0.75rem 1.25rem;
+	background:#ffffff;
+	color:#000000;
+	border-radius:50px;
+	font-size:1rem;
+	font-weight:700;
+	text-decoration:none;
+	box-shadow:0 4px 12px rgba(0,0,0,0.2);
+	transition:all 0.18s ease;
+	z-index:1000;
+}
+
+.feedback-btn:hover{
+	background:#f0f0f0;
+	transform:scale(1.1);
+	box-shadow:0 6px 16px rgba(0,0,0,0.3);
 }
 
 .stanford-btn{
@@ -255,21 +279,21 @@ main{
 	justify-content:center;
 	align-items:center;
 	padding:0.75rem 1.25rem;
-	background:#8C1515;
-	color:#fff;
+	background:#ffffff;
+	color:#000000;
 	border-radius:50px;
 	font-size:1rem;
 	font-weight:700;
 	text-decoration:none;
-	box-shadow:0 4px 12px rgba(0,0,0,0.25);
+	box-shadow:0 4px 12px rgba(0,0,0,0.2);
 	transition:all 0.18s ease;
 	z-index:1000;
 }
 
 .stanford-btn:hover{
-	background:#6e0f0f;
-	transform:translateY(-2px);
-	box-shadow:0 6px 16px rgba(0,0,0,0.35);
+	background:#f0f0f0;
+	transform:scale(1.1);
+	box-shadow:0 6px 16px rgba(0,0,0,0.3);
 }
 
 
