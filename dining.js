@@ -42,6 +42,22 @@ var grindTotalVisited = 0;
 var vendingSnackTotalVisited = 0;
 var petalsTotalVisited = 0;
 
+
+var vendingDormVisited = 0; //KGH, MEH, CSD, NRH, GWH, SHH
+var vendingLBRVisited = 0; //liberal arts
+var vendingGLEVisited = 0; //gleason academic
+var vendingGOSVisited = 0; //gosnell
+var vendingGOLVisited = 0; //golisano
+var vendingCARVisited = 0; //carlson
+var vendingEASVisited = 0; //eastman
+var vendingBOOVisited = 0; //booth
+var vendingSHEDVisited = 0; //shed
+var vendingSLAVisited = 0; //slaughter
+var vendingSAUVisited = 0; //student alumni union
+var vendingHACVisited = 0; //hale andrews slc
+
+
+
 const chart = document.getElementById('myChart');
 
 var dates = [];
@@ -157,7 +173,37 @@ document.addEventListener('DOMContentLoaded', () => {
 			petalsTotal -= parseFloat(line[2]) || 0;
 			petalsTotalVisited++;
 		}
-	
+
+		//vending
+		if (line[1].includes('BEVERAGE') || line[1].includes('SNACK')) {
+			if (line[2] != 0){
+				if (line[1].includes('LBR')) {
+					vendingLBRVisited++;
+				} else if (line[1].includes('GLE')) {
+					vendingGLEVisited++;
+				} else if (line[1].includes('GOS')) {
+					vendingGOSVisited++;
+				} else if (line[1].includes('GOL')) {
+					vendingGOLVisited++;
+				} else if (line[1].includes('CAR')) {
+					vendingCARVisited++;
+				} else if (line[1].includes('EAS')) {
+					vendingEASVisited++;
+				} else if (line[1].includes('BOO')) {
+					vendingBOOVisited++;
+				} else if (line[1].includes('SHED')) {
+					vendingSHEDVisited++;
+				} else if (line[1].includes('SLA')) {
+					vendingSLAVisited++;
+				} else if (line[1].includes('SAU')) {
+					vendingSAUVisited++;
+				} else if (line[1].includes('HAC')) {
+					vendingHACVisited++;
+				} else if (line[1].includes('KGH') || line[1].includes('MEH') || line[1].includes('CSD') || line[1].includes('NRH') || line[1].includes('GWH') || line[1].includes('SHH')) {
+					vendingDormVisited++;
+				}
+			}
+		}
 
 		if (datesAndBalances.length > 0){
 			if (line[0].slice(0, 10) != datesAndBalances.at(-1)[0].slice(0, 10)) {
@@ -222,6 +268,22 @@ document.addEventListener('DOMContentLoaded', () => {
 	console.log('Dates:', dates);
 	console.log('Balances:', balances);
 	console.log('Dates and Balances:', datesAndBalances);
+
+
+	console.log('vending specifc visits:');
+	console.log('Dormside (KGH, MEH, CSD, NRH, GWH, SHH):', vendingDormVisited);
+	console.log('Liberal Arts (LBR):', vendingLBRVisited);
+	console.log('Gleason Academic (GLE):', vendingGLEVisited);
+	console.log('Gosnell (GOS):', vendingGOSVisited);
+	console.log('Golisano (GOL):', vendingGOLVisited);
+	console.log('Carlson (CAR):', vendingCARVisited);
+	console.log('Eastman (EAS):', vendingEASVisited);
+	console.log('Booth (BOO):', vendingBOOVisited);
+	console.log('Shed (SHED):', vendingSHEDVisited);
+	console.log('Slaughter (SLA):', vendingSLAVisited);
+	console.log('Student Alumni Union (SAU):', vendingSAUVisited);
+	console.log('Hale Andrews SLC (HAC):', vendingHACVisited);
+
 
 	try {
 		sessionStorage.setItem('uploadedCSVList', JSON.stringify(rows));
@@ -469,6 +531,63 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	});
 
+
+	//gathering data for polar area chart
+	var PolarLabels = ["Central (Artesanos, Ben & Jerry's, Brick City, Loaded Latke, Nathans, RITZ)", "Dormside (Beanz, Corner Store, Commons, College Grind)", "Global Village (Croads, Cantina, Moil, GV Market)", "Academic (Bytes, Ctrl Alt Deli)"];
+	var PolarData = [0, 0, 0, 0];
+	PolarData[0] = artesanosTotal + BJTotal + brickTotal + loadedTotal + nathansTotal + ritzTotal;
+	PolarData[1] = beanzTotal + cohoTotal + commonsTotal + grindTotal;
+	PolarData[2] = croadsTotal + cantinaTotal + moilTotal + marketTotal;
+	PolarData[3] = bytesTotal + ctrlTotal;
+	PolarData[0] = Math.round(PolarData[0] * 100) / 100;
+	PolarData[1] = Math.round(PolarData[1] * 100) / 100;
+	PolarData[2] = Math.round(PolarData[2] * 100) / 100;
+	PolarData[3] = Math.round(PolarData[3] * 100) / 100;
+
+	//polar area chart
+	new Chart("myChartPolar", {
+		type: "polarArea",
+		data: {
+			labels: PolarLabels,
+			datasets: [{
+				label: "Expenditure by Location Type",
+				data: PolarData,
+				backgroundColor: ["rgba(255, 121, 219, 0.75)", "rgba(104, 122, 255, 0.75)", "rgba(196, 69, 255, 0.75)", "rgba(69, 255, 249, 0.75)"],
+				borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)", "rgb(204, 0, 255)", "rgba(75, 192, 192, 1)"],
+				borderWidth: 1
+			}]
+		}
+	});
+
+
+	//cleaning vending location data
+	var vendingLocations = ["Dormside", "Liberal Arts", "Gleason", "Gosnell", "Golisano", "Carlson", "Eastman", "Booth", "Shed", "Slaughter", "SAU", "HAC"];
+	var vendingVisits = [vendingDormVisited, vendingLBRVisited, vendingGLEVisited, vendingGOSVisited, vendingGOLVisited, vendingCARVisited, vendingEASVisited, vendingBOOVisited, vendingSHEDVisited, vendingSLAVisited, vendingSAUVisited, vendingHACVisited];
+	const combined = vendingLocations.map((loc, i) => ({
+		loc,
+		visits: vendingVisits[i]
+	}));
+	combined.sort((a, b) => b.visits - a.visits);
+	const sortedVendingLocations = combined.map(item => item.loc);
+	const sortedVendingVisits = combined.map(item => item.visits);
+
+	new Chart("myChartVendingBar", {
+		type: "bar",
+		data: {
+			labels: sortedVendingLocations,
+			datasets: [{
+				label: "Vending Visits (WIP)",
+				data: sortedVendingVisits,
+				backgroundColor: ["rgba(255, 99, 132, 0.75)", "rgba(54, 162, 235, 0.75)", "rgba(255, 206, 86, 0.75)", "rgba(75, 192, 192, 0.75)", "rgba(153, 102, 255, 0.75)", "rgba(255, 159, 64, 0.75)", "rgba(255, 121, 219, 0.75)", "rgba(104, 122, 255, 0.75)", "rgba(196, 69, 255, 0.75)", "rgba(69, 255, 249, 0.75)", "rgba(255, 206, 86, 0.75)", "rgba(153, 102, 255, 0.75)"],
+				borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)", "rgba(255, 206, 86, 1)", "rgba(75, 192, 192, 1)", "rgba(153, 102, 255, 1)", "rgba(255, 159, 64, 1)", "rgba(255, 121, 219, 1)", "rgba(104, 122, 255, 1)", "rgba(196, 69, 255, 1)", "rgba(69, 255, 249, 1)", "rgba(255, 206, 86, 1)", "rgba(153, 102, 255, 1)"],
+				borderWidth: 1
+			}]
+		},
+	});
+
+
+
+
 	//getting last 4 weeks info
 	currentDate = new Date(dates.at(-2));
 	console.log("Current date:", currentDate);
@@ -496,9 +615,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	const semesterEndDate = new Date(document.getElementById("semesterEndDate").value);
 	daysleft = (semesterEndDate - currentDate) / (1000 * 60 * 60 * 24);
 	console.log("Days left:", daysleft);
+	const targetAmount = parseInt(document.getElementById("targetEndAmount").value);
 	spendPerDayLeft = currentBalance / daysleft;
-	spendPerDayLeft1000 = (currentBalance - 1000) / daysleft;
-	console.log("Average spend per day left (ending with $1000):", spendPerDayLeft1000);
+	spendPerDayLeft1000 = (currentBalance - targetAmount) / daysleft;
+	console.log("Average spend per day left (ending with $" + targetAmount + "):", spendPerDayLeft1000);
+	document.getElementById("avgSpendLeft1000").innerHTML = `Amount Left to Spend per Day (ending with $${targetAmount})`;
 	document.getElementById("avgSpendLeftValue1000").innerHTML = `$${spendPerDayLeft1000.toFixed(2)}`;
 	console.log("Average spend per day left:", spendPerDayLeft);
 	document.getElementById("avgSpendLeftValue").innerHTML = `$${spendPerDayLeft.toFixed(2)}`;
@@ -558,9 +679,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		var daysinterm = (semesterEndDate - new Date('2026-01-11')) / (1000 * 60 * 60 * 24);
 		console.log("Days in term:", daysinterm);
 		daysleft = (semesterEndDate - currentDate) / (1000 * 60 * 60 * 24);
+		const targetAmount = parseInt(document.getElementById("targetEndAmount").value);
 		spendPerDayLeft = currentBalance / daysleft;
-		spendPerDayLeft1000 = (currentBalance - 1000) / daysleft;
+		spendPerDayLeft1000 = (currentBalance - targetAmount) / daysleft;
 
+		document.getElementById("avgSpendLeft1000").innerHTML = `Amount Left to Spend per Day (ending with $${targetAmount})`;
 		document.getElementById("avgSpendLeftValue1000").innerHTML = `$${spendPerDayLeft1000.toFixed(2)}`;
 		document.getElementById("avgSpendLeftValue").innerHTML = `$${spendPerDayLeft.toFixed(2)}`;
 
@@ -568,6 +691,32 @@ document.addEventListener('DOMContentLoaded', () => {
 		document.querySelector(".dateProgress").style.width = percent + "%";
 		document.getElementById("dateProgressID").innerHTML = `${percent.toFixed(1)}%`;
 	});
+
+	// Add event listener for target end amount changes
+	document.getElementById("targetEndAmount").addEventListener('input', () => {
+		const semesterEndDate = new Date(document.getElementById("semesterEndDate").value);
+		daysleft = (semesterEndDate - currentDate) / (1000 * 60 * 60 * 24);
+		const targetAmount = parseInt(document.getElementById("targetEndAmount").value);
+		spendPerDayLeft1000 = (currentBalance - targetAmount) / daysleft;
+
+		document.getElementById("avgSpendLeft1000").innerHTML = `Amount Left to Spend per Day (ending with $${targetAmount})`;
+		document.getElementById("avgSpendLeftValue1000").innerHTML = `$${spendPerDayLeft1000.toFixed(2)}`;
+
+		// Update slider background
+		updateSliderBackground();
+	});
+
+	// Function to update slider background
+	function updateSliderBackground() {
+		const slider = document.getElementById("targetEndAmount");
+		const value = slider.value;
+		const max = slider.max;
+		const percent = (value / max) * 100;
+		slider.style.background = `linear-gradient(to right, #e63e2c 0%, #ffbe92 ${percent}%, #333 ${percent}%, #999 100%)`;
+	}
+
+	// Initial update
+	updateSliderBackground();
 
 });
 

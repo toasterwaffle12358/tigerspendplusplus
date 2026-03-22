@@ -52,6 +52,10 @@
                 <option value="2026-05-09">May 9th, 2026</option>
                 <option value="2026-05-10">May 10th, 2026</option>
             </select>
+            How much do you want to end with?
+            <div class="slider-container">
+                <input type="range" id="targetEndAmount" min="0" max="1000" value="1000" step="10">
+            </div>
             <h3 id="avgSpend">Average Spending per Day (last 4 weeks)</h3>
             <p id="avgSpendValue" class="breakdownValue">example</p>
             <h3 id="avgSpendLeft1000">Amount Left to Spend per Day (ending with $1000)</h3>
@@ -75,6 +79,12 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="graphs_container">
+        <canvas id="myChartPolar" class="polarchart"></canvas>
+    </div>
+    <div class="graphs_container">
+        <canvas id="myChartVendingBar" class="barchart"></canvas>
     </div>
     <div class="graphs_container">
       <div class="comingsoon">
