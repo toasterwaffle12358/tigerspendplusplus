@@ -1,0 +1,47 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+    background: radial-gradient(1000px 500px at 10% 10%, rgba(255,170,100,0.14) 0%, transparent 18%),
+                radial-gradient(800px 400px at 90% 90%, rgba(255,102,0,0.12) 0%, transparent 22%),
+                linear-gradient(135deg, #fff2e8 0%, #ffd1a3 20%, #ffb070 45%, #ff8a2a 70%, #ff6600 100%);
+}
+
+.redirect-box {
+    width: min(96%, 500px);
+    padding: 1.25rem 1.5rem;
+    text-align: center;
+}
+
+.redirect-box h1 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #222;
+}
+
+.redirect-box p {
+    margin-top: 0.5rem;
+    color: rgba(43, 43, 43, 0.8);
+    font-size: 0.95rem;
+}
+
+.progress-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+    border-radius: 999px;
+    transition: width 0.2s ease;
+}

@@ -102,11 +102,16 @@ function parseCSV(text) {
 
 document.addEventListener('DOMContentLoaded', () => {
 	const content = document.getElementById('content');
-	const csv = sessionStorage.getItem('uploadedCSVText');
+	var csv = sessionStorage.getItem('uploadedCSVText');
+	if (!csv) {
+		csv = sessionStorage.getItem('myCSV');
+		csv += '\n' + sessionStorage.getItem('myCSVRollover');
+	}
 	if (!csv) {
 		if (content) content.textContent = 'No CSV found. Go back and upload a file.';
 		return;
 	}
+	
 
 	const rows = parseCSV(csv);
 	// `rows` is a list of lists: outer list = lines, inner lists = items per line
@@ -589,10 +594,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 	//getting last 4 weeks info
-	currentDate = new Date(dates.at(-2));
+
+
+	currentDate = new Date(dates.at(-3));
 	console.log("Current date:", currentDate);
 
-	currentBalance = parseFloat(balances.at(-2));
+	currentBalance = parseFloat(balances.at(-3));
 	console.log("Current balance:", currentBalance);
 
 	fourweeksAgo = new Date(dates.at(-30));

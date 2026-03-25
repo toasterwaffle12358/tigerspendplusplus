@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gathering CSV Information</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="redirect.css">
+</head>
+<body>
+    <div class="content-box redirect-box">
+        <h1>Gathering CSV information...</h1>
+        <p id="status-message">Hang tight, your file is being processed and you’ll be redirected shortly.</p>
+        <div class="progress-container" aria-hidden="true">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <p class="progress-label">Loading rollover CSV</p>
+        <div class="progress-container" aria-hidden="true">
+            <div class="progress-bar" id="csvProgressBar"></div>
+        </div>
+    </div>
+    <script src="redirect.js"></script>
+</body>
+</html>
