@@ -101,15 +101,24 @@ function parseCSV(text) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+	const ToggleThisTermState = localStorage.getItem("ToggleThisTermState") === "true";
+	const csvThisTerm = sessionStorage.getItem("MyCSVThisTerm");
+	const rolloverThisTerm = sessionStorage.getItem("MyCSVRolloverThisTerm");
 	const content = document.getElementById('content');
-	var csv = sessionStorage.getItem('uploadedCSVText');
-	if (!csv) {
-		csv = sessionStorage.getItem('myCSV');
-		csv += '\n' + sessionStorage.getItem('myCSVRollover');
-	}
-	if (!csv) {
-		if (content) content.textContent = 'No CSV found. Go back and upload a file.';
-		return;
+	if (ToggleThisTermState) {
+		var csv = csvThisTerm;
+		csv += '\n' + rolloverThisTerm;
+		console.log('Toggling this term only. CSV from this term:', csv);
+	} else {
+		var csv = sessionStorage.getItem('uploadedCSVText');
+		if (!csv) {
+			csv = sessionStorage.getItem('myCSV');
+			csv += '\n' + sessionStorage.getItem('myCSVRollover');
+		}
+		if (!csv) {
+			if (content) content.textContent = 'No CSV found. Go back and upload a file.';
+			return;
+		}
 	}
 	
 
@@ -529,6 +538,30 @@ document.addEventListener('DOMContentLoaded', () => {
 							xMax: new Date('2025-08-18'),
 							borderColor: 'black',
 							borderWidth: 2,
+						},
+						thanksgivingBreak: {
+							type: 'box',
+							xMin: new Date('2025-11-26'),   // start of break
+							xMax: new Date('2025-11-30'),    // end of break
+							backgroundColor: 'rgba(173, 230, 177, 0.3)',
+							borderColor: 'green',
+							borderWidth: 1,
+							label: {
+								content: 'Thanksgiving Break',
+								enabled: true,
+								position: 'center',
+								color: 'black',
+								font: { weight: 'bold' }
+							}
+						},
+						thanksgivingBreakLabel: {
+							type: 'label',
+							xValue: new Date('2025-11-28'),   // middle of break
+							yValue: 1000,
+							content: 'Thanksgiving Break',
+							color: 'black',
+							font: { size: 10 , weight: 'bold'},
+							rotation: 90
 						}
 					}
 				}
@@ -678,6 +711,87 @@ document.addEventListener('DOMContentLoaded', () => {
 	console.log("Percent of dining dollars used:", percentUsed);
 	document.querySelector(".spendProgress").style.width = percentUsed + "%";
 	document.getElementById("spendProgressID").innerHTML = `${percentUsed.toFixed(1)}%`;
+
+
+
+	//getting spending per day
+	spendingoriginal = balances
+	spending = [];
+
+	console.log("spending:", spendingoriginal);
+	for (i = 0; i < spendingoriginal.length - 1; i++) {
+		spending.push(spendingoriginal[i+1] - spendingoriginal[i]);
+	}
+	for (i = 0; i < spending.length; i++) {
+		if (spending[i] > 0) {
+			spending[i] = 0;
+		}
+		if (spending[i] < -200) {
+			spending[i] = 0;
+		}
+		spending[i] = spending[i] * -1;
+	}
+	console.log("spending:", spending);
+
+	newdates = [];
+	for (i = 0; i < dates.length - 1; i++) {
+		newdates.push(dates[i+1]);
+	}
+
+	//making spending chart
+	new Chart("myChartSpending", {
+		type: "bar",
+		data: {
+			labels: newdates.slice(1),
+			datasets: [{
+				data: spending,
+				label: "Spending Per Day",
+				fill: false,
+				borderColor: "rgb(255, 0, 0)",
+				backgroundColor: "rgb(255, 77, 0)",
+				tension: 0
+			}]
+		},
+		options: {
+			maintainAspectRatio: false,
+			legend: {display: false},
+			scales: {
+				y: {
+					beginAtZero: false
+				},
+				x: {
+					type: 'time',
+					min: new Date('2025-08-015'),
+					max: new Date('2026-05-20')
+
+				}
+			},
+			plugins: {
+				datalabels: {
+					display: false
+				},
+				annotation: {
+					annotations: {
+						endOfYear: {
+							type: 'line',
+							xMin: new Date('2026-05-05'),
+							xMax: new Date('2026-05-05'),
+							borderColor: 'black',
+							borderWidth: 2,
+						},
+						startOfYear: {
+							type: 'line',
+							xMin: new Date('2025-08-18'),
+							xMax: new Date('2025-08-18'),
+							borderColor: 'black',
+							borderWidth: 2,
+						},
+					}
+				}
+			}
+		}
+	});
+
 
 
 	// Add event listener for semester end date changes
