@@ -633,16 +633,22 @@ document.addEventListener('DOMContentLoaded', () => {
 	//getting last 4 weeks info
 
 
-	currentDate = new Date(dates.at(-3));
-	console.log("Current date:", currentDate);
+	function addDays(date, days) {
+		const result = new Date(date); // clone so you don't mutate original
+		result.setDate(result.getDate() + days);
+		return result;
+	}
+	currentDate = new Date(dates.at(-4));
+	console.log("4 days ago:", currentDate);
 
-	currentBalance = parseFloat(balances.at(-3));
+
+	currentBalance = parseFloat(balances.at(-4));
 	console.log("Current balance:", currentBalance);
 
-	fourweeksAgo = new Date(dates.at(-30));
+	fourweeksAgo = new Date(dates.at(-32));
 	console.log("Four weeks ago:", fourweeksAgo);
 
-	fourweeksAgoBalance = parseFloat(balances.at(-30));
+	fourweeksAgoBalance = parseFloat(balances.at(-32));
 	if (fourweeksAgoBalance < currentBalance) {
 		fourweeksAgoBalance += 2500;
 	}
