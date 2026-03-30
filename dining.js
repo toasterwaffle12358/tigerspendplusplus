@@ -105,20 +105,24 @@ document.addEventListener('DOMContentLoaded', () => {
 	const csvThisTerm = sessionStorage.getItem("MyCSVThisTerm");
 	const rolloverThisTerm = sessionStorage.getItem("MyCSVRolloverThisTerm");
 	const content = document.getElementById('content');
+	console.log('ToggleThisTermState:', ToggleThisTermState);
 	if (ToggleThisTermState) {
 		var csv = csvThisTerm;
 		csv += '\n' + rolloverThisTerm;
 		console.log('Toggling this term only. CSV from this term:', csv);
 	} else {
 		var csv = sessionStorage.getItem('uploadedCSVText');
-		if (!csv) {
-			csv = sessionStorage.getItem('myCSV');
-			csv += '\n' + sessionStorage.getItem('myCSVRollover');
-		}
+		csv += sessionStorage.getItem('myCSV');
+		csv += '\n' + sessionStorage.getItem('myCSVRollover');
 		if (!csv) {
 			if (content) content.textContent = 'No CSV found. Go back and upload a file.';
 			return;
 		}
+	}
+
+	var startdate = new Date('2025-08-01');
+	if (ToggleThisTermState) {
+		startdate = new Date('2026-01-01');
 	}
 	
 
@@ -472,7 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				},
 				x: {
 					type: 'time',
-					min: new Date('2025-08-01'),
+					min: startdate,
 					max: new Date('2026-05-20')
 
 				}
@@ -761,7 +765,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				},
 				x: {
 					type: 'time',
-					min: new Date('2025-08-015'),
+					min: startdate,
 					max: new Date('2026-05-20')
 
 				}
@@ -791,6 +795,230 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		}
 	});
+
+
+	//generating canvases for sharables
+	const receiptCanvas = document.getElementById("receiptCanvas");
+	const ctx = receiptCanvas.getContext("2d");
+
+	receiptCanvas.width = 1080;
+	receiptCanvas.height = 1920;
+
+	const receiptbg = new Image();
+	receiptbg.src = "./resources/receipt-background.jpg";
+
+	function loadImage(src) {
+		return new Promise((resolve, reject) => {
+			const img = new Image();
+			img.onload = () => resolve(img);
+			img.onerror = reject;
+			img.src = src;
+		});
+	}
+
+	const barcode = new Image();
+	barcode.src = "./resources/barcode.svg";
+
+	const font = new FontFace("ReceiptFont", "url(./resources/MODES___.TTF)");
+
+	const now = new Date();
+	console.log(now);
+
+	font.load().then((loadedFont) => {
+		document.fonts.add(loadedFont);
+		// NOW it's safe to draw
+		drawCanvas();
+	});
+
+	var spendingTotal = artesanosTotal + beanzTotal + BJTotal + bytesTotal + cohoTotal + cantinaTotal + moilTotal + nathansTotal + ritzTotal + croadsTotal + commonsTotal + marketTotal + loadedTotal + ctrlTotal + vendingDrinkTotal + brickTotal + grindTotal + vendingSnackTotal + petalsTotal;
+	console.log("Total spending:", spendingTotal);
+
+	document.getElementById("closeOverlayBtn").onclick = hideReceipt;
+	document.getElementById("downloadReceiptBtn").onclick = showReceipt;
+
+	function showReceipt() {
+		const receiptSection = document.getElementById('receiptSection');
+		receiptSection.style.display = 'flex';
+	}
+	function hideReceipt() {
+		const receiptSection = document.getElementById('receiptSection');
+		receiptSection.style.display = 'none';
+	}
+
+	document.getElementById("downloadReceiptBtn2").onclick = () => {
+		const link = document.createElement("a");
+		link.download = "tigerspendplusplus_receipt.png";
+		link.href = receiptCanvas.toDataURL("image/png");
+		link.click();
+	};
+
+
+	function drawCanvas() {
+		// draw background first
+		ctx.drawImage(receiptbg, 0, 0, receiptCanvas.width, receiptCanvas.height);
+
+		// then draw text on top
+		ctx.fillStyle = "#000";
+		ctx.font = "100px ReceiptFont";
+		ctx.textAlign = "center";
+		ctx.fillText("TIGERSPEND++", receiptCanvas.width / 2, 150);
+		ctx.font = "30px ReceiptFont";
+		ctx.fillText('Detailed dining statistics for RIT students.', receiptCanvas.width / 2, 200);
+		ctx.font = "40px ReceiptFont";
+		ctx.fillText('========================================', receiptCanvas.width / 2, 275);
+		ctx.textAlign = "left";
+		ctx.font = "35px ReceiptFont";
+		ctx.fillText(`Average Spend Per Day (last 4 weeks): $${spendPerDay.toFixed(2)}`, 60, 325);
+		ctx.font = "40px ReceiptFont";
+		ctx.textAlign = "center";
+		ctx.fillText('========================================', receiptCanvas.width / 2, 375);
+		ctx.fillText('Totals:', receiptCanvas.width / 2, 425);
+		ctx.fillText('----------------------------------------', receiptCanvas.width / 2, 460);
+		ctx.fillText('VISITS     LOCATION         PCT SPENDING', receiptCanvas.width / 2, 500);
+		ctx.fillText('----------------------------------------', receiptCanvas.width / 2, 540);
+		ctx.textAlign = "left";
+		//artesanos
+		ctx.fillText(`${artesanosTotalVisited}`, 60, 600);
+		ctx.fillText('Artesanos', 310, 600);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((artesanosTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 600);
+		ctx.textAlign = "left";
+
+		//Beanz
+		ctx.fillText(`${beanzTotalVisited}`, 60, 650);
+		ctx.fillText('Beanz', 310, 650);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((beanzTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 650);
+		ctx.textAlign = "left";
+		
+		//Ben & Jerry's
+		ctx.fillText(`${BJTotalVisited}`, 60, 700);
+		ctx.fillText('Ben & Jerry\'s', 310, 700);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((BJTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 700);
+		ctx.textAlign = "left";
+
+		//Brick city cafe
+		ctx.fillText(`${brickTotalVisited}`, 60, 750);
+		ctx.fillText('Brick City Cafe', 310, 750);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((brickTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 750);
+		ctx.textAlign = "left";
+
+		//Bytes
+		ctx.fillText(`${bytesTotalVisited}`, 60, 800);
+		ctx.fillText('Bytes', 310, 800);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((bytesTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 800);
+		ctx.textAlign = "left";
+
+		//Cantina
+		ctx.fillText(`${cantinaTotalVisited}`, 60, 850);
+		ctx.fillText('Cantina', 310, 850);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((cantinaTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 850);
+		ctx.textAlign = "left";
+
+		//College Grind
+		ctx.fillText(`${grindTotalVisited}`, 60, 900);
+		ctx.fillText('College Grind', 310, 900);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((grindTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 900);
+		ctx.textAlign = "left";
+
+		//Commons
+		ctx.fillText(`${commonsTotalVisited}`, 60, 950);
+		ctx.fillText('Commons', 310, 950);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((commonsTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 950);
+		ctx.textAlign = "left";
+
+		//Corner Store
+		ctx.fillText(`${cohoTotalVisited}`, 60, 1000);
+		ctx.fillText('Corner Store', 310, 1000);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((cohoTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 1000);
+		ctx.textAlign = "left";
+
+		//Crossroads
+		ctx.fillText(`${croadsTotalVisited}`, 60, 1050);
+		ctx.fillText('Crossroads', 310, 1050);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((croadsTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 1050);
+		ctx.textAlign = "left";
+
+		//Ctrl Alt Deli
+		ctx.fillText(`${ctrlTotalVisited}`, 60, 1100);
+		ctx.fillText('Ctrl Alt Deli', 310, 1100);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((ctrlTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 1100);
+		ctx.textAlign = "left";
+
+		//Loaded Latke
+		ctx.fillText(`${loadedTotalVisited}`, 60, 1150);
+		ctx.fillText('Loaded Latke', 310, 1150);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((loadedTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 1150);
+		ctx.textAlign = "left";
+
+		//Global Market
+		ctx.fillText(`${marketTotalVisited}`, 60, 1200);
+		ctx.fillText('Market at Global', 310, 1200);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((marketTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 1200);
+		ctx.textAlign = "left";
+
+		//Midnight Oil
+		ctx.fillText(`${moilTotalVisited}`, 60, 1250);
+		ctx.fillText('Midnight Oil', 310, 1250);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((moilTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 1250);
+		ctx.textAlign = "left";
+
+		//Nathan's
+		ctx.fillText(`${nathansTotalVisited}`, 60, 1300);
+		ctx.fillText('Nathan\'s', 310, 1300);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((nathansTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 1300);
+		ctx.textAlign = "left";
+
+		//Petals
+		ctx.fillText(`${petalsTotalVisited}`, 60, 1350);
+		ctx.fillText('Petals', 310, 1350);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((petalsTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 1350);
+		ctx.textAlign = "left";
+
+		//RITZ
+		ctx.fillText(`${ritzTotalVisited}`, 60, 1400);
+		ctx.fillText('RITZ', 310, 1400);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((ritzTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 1400);
+		ctx.textAlign = "left";
+
+		//Vending Drinks
+		ctx.fillText(`${vendingDrinkTotalVisited}`, 60, 1450);
+		ctx.fillText('Vending Drinks', 310, 1450);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((vendingDrinkTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 1450);
+		ctx.textAlign = "left";
+
+		//Vending Snacks
+		ctx.fillText(`${vendingSnackTotalVisited}`, 60, 1500);
+		ctx.fillText('Vending Snacks', 310, 1500);
+		ctx.textAlign = "right";
+		ctx.fillText(`${((vendingSnackTotal / spendingTotal) * 100).toFixed(1)}%`, 1010, 1500);
+		
+		
+		ctx.textAlign = "center";
+		ctx.fillText('----------------------------------------', receiptCanvas.width / 2, 1550);
+		ctx.fillText('THANK YOU FOR VISITING!', receiptCanvas.width / 2, 1600);
+		ctx.fillText('Generated by TigerSpend++', receiptCanvas.width / 2, 1650);
+		ctx.drawImage(barcode, 50, 1700, receiptCanvas.width - 100, 150);
+		ctx.fillText('tigerspendplusplus.info', receiptCanvas.width / 2, 1850);
+	};
+
+
 
 
 
